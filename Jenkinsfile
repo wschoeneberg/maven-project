@@ -1,6 +1,15 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'tomcat_stage', defaultValue: '10.11.12.13', description: 'Ip for Tomcat Stage')
+        string(name: 'tomcat_prod',  defaultValue: '10.11.12.12', description: 'Ip for Tomcat Prod')
+    }
+
+    triggers {
+        pollSCM('* * * * *')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -13,7 +22,24 @@ pipeline {
                 }
             }
         }
-   
+
+        stage('Deployments') {
+            parallel {
+                stage('Deploy to stage') {
+                    steps {
+                        sh "cp **/*war /opt/apache-tomcat/apache-tomcat-8.5.27-stage/webapps/ "
+                    }
+                }
+ 
+                stage('Deploy to prod') {
+                    steps {
+                        sh "cp **/*war /opt/apache-tomcat/apache-tomcat-8.5.27-prod/webapps/ "
+                    }
+
+                }
+            }
+        } 
+/*   
         stage('Deploy to staging') {
             steps {
                 build job: 'first-maven_deploy_to_stage'
@@ -38,6 +64,8 @@ pipeline {
                 }
             }
         }
+*/
+
     }
 }
 

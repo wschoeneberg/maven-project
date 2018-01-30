@@ -1,1 +1,1 @@
-Foo baz bar, Version XYZ
+Foo baz bar, Version XXX
