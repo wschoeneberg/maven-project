@@ -13,6 +13,12 @@ pipeline {
                 }
             }
         }
+   
+        stage('Deploy to staging') {
+            steps {
+                build job: 'first-maven_deploy_to_stage'
+            }
+        }
     }
 }
 
