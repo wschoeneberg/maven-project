@@ -27,13 +27,13 @@ pipeline {
             parallel {
                 stage('Deploy to stage') {
                     steps {
-                        sh "cp **/*war /opt/apache-tomcat/apache-tomcat-8.5.27-stage/webapps/ "
+                        sh "cp **/target/*war /opt/apache-tomcat/apache-tomcat-8.5.27-stage/webapps/ "
                     }
                 }
  
                 stage('Deploy to prod') {
                     steps {
-                        sh "cp **/*war /opt/apache-tomcat/apache-tomcat-8.5.27-prod/webapps/ "
+                        sh "cp **/target/*war /opt/apache-tomcat/apache-tomcat-8.5.27-prod/webapps/ "
                     }
 
                 }
